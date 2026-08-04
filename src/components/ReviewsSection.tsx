@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { Star, ShieldCheck, Quote, CheckCircle2, UserCheck } from "lucide-react";
+import { Star, UserCheck } from "lucide-react";
 import { REVIEWS } from "@/data/reviews";
-import { COMPANY_INFO } from "@/data/company";
 
 export function ReviewsSection() {
   return (
@@ -22,7 +21,7 @@ export function ReviewsSection() {
             ماذا يقول عملاؤنا عن خدمة توصيل رواحل جمان؟
           </h2>
           <p className="mt-4 text-base text-slate-300 leading-relaxed">
-            نفخر بتقديم أرقى مستويات الخدمة والتوصيل الخاص لآلاف المعتمرين والزوار والعائلات القادمة عبر مطار جدة ومكة والمدينة.
+            نفخر بتقديم أرقى مستويات الخدمة والتوصيل الخاص للمعتمرين والزوار والعائلات القادمة عبر مطار جدة ومكة والمدينة.
           </p>
         </div>
 
@@ -79,8 +78,8 @@ export function ReviewsSection() {
               4.9
             </div>
             <div>
-              <h3 className="font-bold text-white text-lg">تقييم ممتازة على جوجل ومواقع السفر</h3>
-              <p className="text-xs text-slate-300">بناءً على أكثر من 1,280 تقييم حقيقي لضيوف الرحمن والمجموعات</p>
+              <h3 className="font-bold text-white text-lg">تقييم ممتاز 4.9 / 5</h3>
+              <p className="text-xs text-slate-300">من تقييمات المعتمرين والزوار الحقيقية</p>
             </div>
           </div>
 
