@@ -46,23 +46,23 @@ export function VehicleFilter() {
           </p>
         </div>
 
-        {/* Filter Buttons Tabs */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-6">
+        {/* Filter Buttons Tabs (Scrollable horizontal row on mobile) */}
+        <div className="flex lg:grid lg:grid-cols-5 gap-3 pt-6 overflow-x-auto pb-3 pt-4 scrollbar-none snap-x snap-mandatory touch-pan-x -mx-2 px-2">
           {filterOptions.map((option) => (
             <button
               key={option.id}
               onClick={() => setSelectedFilter(option.id)}
-              className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border transition-all duration-200 text-center ${
+              className={`shrink-0 min-w-[170px] lg:min-w-0 flex flex-col items-center justify-center p-3.5 rounded-2xl border transition-all duration-200 text-center snap-align-start select-none cursor-pointer ${
                 selectedFilter === option.id
                   ? "bg-[#256F96] text-white border-[#256F96] shadow-md scale-102"
                   : "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100 hover:border-zinc-300"
               }`}
             >
-              <div className="flex items-center gap-1.5 font-bold text-sm sm:text-base">
+              <div className="flex items-center gap-1.5 font-bold text-sm sm:text-base whitespace-nowrap">
                 <Users className={`w-4 h-4 ${selectedFilter === option.id ? "text-[#F6976B]" : "text-[#256F96]"}`} />
                 <span>{option.label}</span>
               </div>
-              <span className={`text-[11px] mt-1 ${selectedFilter === option.id ? "text-zinc-100" : "text-zinc-500"}`}>
+              <span className={`text-[11px] mt-1 whitespace-nowrap ${selectedFilter === option.id ? "text-zinc-100" : "text-zinc-500"}`}>
                 {option.tag}
               </span>
             </button>
@@ -130,7 +130,7 @@ export function VehicleFilter() {
                   </ul>
                 </div>
 
-                {/* Direct Action Buttons (NO PRICES) */}
+                {/* Direct Action Buttons */}
                 <div className="pt-3 border-t border-zinc-100 flex items-center gap-2">
                   <a
                     href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=` + encodeURIComponent(`السلام عليكم، أرغب في الاستفسار وحجز سيارة (${vehicle.name}) لتوصيل مطار جدة / مكة`)}
