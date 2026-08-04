@@ -4,11 +4,12 @@ import Link from "next/link";
 import { VEHICLES } from "@/data/vehicles";
 import { COMPANY_INFO } from "@/data/company";
 import { VehicleFilter } from "@/components/VehicleFilter";
-import { Car, Users, Briefcase, CheckCircle2, MessageCircle, ChevronLeft } from "lucide-react";
+import { WhatsappIcon } from "@/components/WhatsappIcon";
+import { Car, Users, Briefcase, ChevronLeft } from "lucide-react";
 
 export const metadata = {
   title: "أسطول السيارات المتاحة | كامري، ستاريا، جمس، هايس، كوستر",
-  description: "استعرض كافة السيارات المتاحة للتوصيل من مطار جدة إلى مكة المكرمة والمدينة المنورة لدى شركة رواحل جمان للنقل البري. أحدث الموديلات بدون ذكر أسعار وحجز مباشر عبر الواتساب.",
+  description: "استعرض كافة السيارات المتاحة للتوصيل من مطار جدة إلى مكة المكرمة والمدينة المنورة لدى شركة رواحل جمان للنقل البري. أحدث الموديلات وحجز مباشر عبر الواتساب.",
 };
 
 export default function VehiclesPage() {
@@ -36,7 +37,7 @@ export default function VehiclesPage() {
         <div className="space-y-8 pt-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl font-black text-[#0f1c24]">
-              تفاصيل كافة السيارات والمواصفات (بدون أسعار)
+              تفاصيل كافة السيارات والمواصفات
             </h2>
             <p className="text-xs text-slate-500 mt-1">
               جميع السيارات موديلات حديثة ومعقمة يومياً وتأتي مع سائق محترف.
@@ -90,8 +91,8 @@ export default function VehiclesPage() {
 
                     <ul className="space-y-1.5 text-xs text-slate-600 pt-2">
                       {vehicle.features.slice(0, 4).map((f, idx) => (
-                        <li key={idx} className="flex items-center gap-1.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#256F96]" />
+                        <li key={idx} className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#256F96] shrink-0" />
                           <span>{f}</span>
                         </li>
                       ))}
@@ -107,7 +108,7 @@ export default function VehiclesPage() {
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 rounded-xl font-bold text-xs shadow-md transition-all"
                     >
-                      <MessageCircle className="w-4 h-4 fill-current" />
+                      <WhatsappIcon className="w-4 h-4 fill-current" />
                       <span>حجز مباشر عبر الواتساب</span>
                     </a>
 

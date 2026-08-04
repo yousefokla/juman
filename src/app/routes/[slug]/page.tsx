@@ -142,13 +142,13 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
           </div>
         </div>
 
-        {/* Recommended Vehicles (NO PRICES) */}
+        {/* Recommended Vehicles */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-extrabold text-[#18181B]">
               السيارات الموصى بها لهذا المسار
             </h2>
-            <span className="text-xs font-bold text-zinc-500">بدون أسعار • حجز مباشر</span>
+            <span className="text-xs font-bold text-[#256F96]">حجز وتوصيل مباشر</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

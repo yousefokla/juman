@@ -6,7 +6,8 @@ import { VehiclesSection } from "@/components/VehiclesSection";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { BlogSection } from "@/components/BlogSection";
 import { COMPANY_INFO } from "@/data/company";
-import { ShieldCheck, Phone, MessageCircle, Clock, Star, Car, Award } from "lucide-react";
+import { WhatsappIcon } from "@/components/WhatsappIcon";
+import { ShieldCheck, Phone, Clock, Star, Car, Award } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -59,7 +60,7 @@ export default function HomePage() {
       {/* 3. Routes Section (المسارات) */}
       <RoutesSection />
 
-      {/* 4. Vehicles Section (السيارات - بدون أسعار) */}
+      {/* 4. Vehicles Section (السيارات) */}
       <VehiclesSection />
 
       {/* Detailed Service Explanation Banner (اشرح الخدمة بشكل مناسب) */}
@@ -86,7 +87,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white px-8 py-4 rounded-2xl font-extrabold text-base shadow-xl shadow-[#25D366]/30 transition-all hover:scale-105"
               >
-                <MessageCircle className="w-5 h-5 fill-current" />
+                <WhatsappIcon className="w-5 h-5 fill-current" />
                 <span>حجز مباشر عبر الواتساب</span>
               </a>
 

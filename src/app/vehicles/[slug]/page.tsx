@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { VEHICLES } from "@/data/vehicles";
 import { COMPANY_INFO } from "@/data/company";
-import { Users, Briefcase, MessageCircle, Phone, ArrowRight, ShieldCheck } from "lucide-react";
+import { WhatsappIcon } from "@/components/WhatsappIcon";
+import { Users, Briefcase, Phone, ArrowRight, ShieldCheck } from "lucide-react";
 
 export async function generateStaticParams() {
   return VEHICLES.map((vehicle) => ({
@@ -64,7 +65,7 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
             )}
           </div>
 
-          {/* Quick Specs & Actions */}
+          {/* Quick Info & Actions */}
           <div className="p-8 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <span className="inline-block bg-[#256F96]/10 text-[#256F96] font-bold text-xs px-3 py-1 rounded-full">
@@ -103,7 +104,7 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            {/* Direct WhatsApp CTA (NO PRICE) */}
+            {/* Direct WhatsApp CTA */}
             <div className="pt-4 border-t border-zinc-100 space-y-3">
               <a
                 href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=` + encodeURIComponent(`السلام عليكم، أرغب في حجز سيارة (${vehicle.name}) لتوصيل مطار جدة / مكة`)}
@@ -111,7 +112,7 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3.5 rounded-xl font-extrabold text-sm shadow-lg shadow-[#25D366]/30 transition-all hover:scale-102"
               >
-                <MessageCircle className="w-5 h-5 fill-current" />
+                <WhatsappIcon className="w-5 h-5 fill-current" />
                 <span>حجز سيارة {vehicle.arabicName} عبر الواتساب</span>
               </a>
 
@@ -126,9 +127,8 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
           </div>
         </div>
 
-        {/* Detailed Information & Technical Specs */}
+        {/* Detailed Description & Features */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Detailed Specs Column */}
           <div className="lg:col-span-2 space-y-8">
             <div className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-6">
               <h2 className="text-2xl font-extrabold text-[#18181B]">
@@ -140,7 +140,6 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
 
               <div className="pt-4 border-t border-zinc-100 space-y-3">
                 <h3 className="font-bold text-base text-[#18181B]">مميزات ورفاهية هذه المركبة:</h3>
-                {/* Clean bullet items without inline icons */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-zinc-700 font-medium">
                   {vehicle.features.map((feat, i) => (
                     <div key={i} className="flex items-center gap-2 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
@@ -166,46 +165,27 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
             </div>
           </div>
 
-          {/* Technical Specs Card */}
+          {/* Guarantee & Contact Sidebar */}
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 border border-zinc-200 shadow-sm space-y-4">
-              <h3 className="text-lg font-extrabold text-[#18181B] border-b border-zinc-100 pb-3">
-                المواصفات الفنية للسيارة
-              </h3>
-
-              <div className="space-y-3 text-xs text-zinc-700 font-medium">
-                <div className="flex justify-between py-2 border-b border-zinc-100">
-                  <span className="text-zinc-500">سنة الموديل</span>
-                  <span className="font-bold text-[#18181B]">{vehicle.specs.modelYears}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-zinc-100">
-                  <span className="text-zinc-500">نوع التكييف</span>
-                  <span className="font-bold text-[#18181B]">{vehicle.specs.acType}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-zinc-100">
-                  <span className="text-zinc-500">المقاعد</span>
-                  <span className="font-bold text-[#18181B]">{vehicle.specs.seats}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-zinc-100">
-                  <span className="text-zinc-500">المحرك</span>
-                  <span className="font-bold text-[#18181B]">{vehicle.specs.engine}</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-zinc-500">ناقل الحركة</span>
-                  <span className="font-bold text-[#18181B]">{vehicle.specs.transmission}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Guarantee Box */}
-            <div className="bg-[#0f1c24] text-white rounded-3xl p-6 space-y-3">
-              <div className="flex items-center gap-2 text-[#F6976B] font-bold text-sm">
-                <ShieldCheck className="w-5 h-5" />
+            <div className="bg-[#0f1c24] text-white rounded-3xl p-8 space-y-4 shadow-md">
+              <div className="flex items-center gap-2 text-[#F6976B] font-bold text-base">
+                <ShieldCheck className="w-6 h-6" />
                 <span>ضمان الجودة والنظافة</span>
               </div>
               <p className="text-xs text-zinc-300 leading-relaxed">
                 جميع سياراتنا تخضع لفحص دوري شامل وتطهير يومي قبل كل رحلة لضمان رحلة مريحة وآمنة لك ولعائلتك.
               </p>
+              <div className="pt-2">
+                <a
+                  href={COMPANY_INFO.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-bold text-xs shadow-md"
+                >
+                  <WhatsappIcon className="w-4 h-4 fill-current" />
+                  <span>تواصل فوري للحجز</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

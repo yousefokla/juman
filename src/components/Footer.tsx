@@ -63,7 +63,7 @@ export function Footer() {
           {/* Column 3: Vehicles Available */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-[#F6976B] relative pb-2 after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-10 after:h-0.5 after:bg-[#256F96]">
-              أسطول السيارات (بدون أسعار)
+              أسطول السيارات الفاخرة
             </h3>
             <ul className="space-y-2.5 text-sm text-slate-300">
               {VEHICLES.map((vehicle) => (
