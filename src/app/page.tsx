@@ -15,55 +15,105 @@ export default function HomePage() {
       {/* 1. Hero Carousel */}
       <HeroCarousel />
 
-      {/* 2. Vehicle Passenger Filter (المقدمة بها فلترة السيارات حسب عدد الركاب) */}
+      {/* 2. Vehicle Passenger Filter */}
       <VehicleFilter />
 
-      {/* Trust & Features Counter Bar */}
-      <section className="py-14 bg-white border-y border-slate-200/80 my-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-              <div className="w-10 h-10 rounded-xl bg-[#256F96]/10 text-[#256F96] flex items-center justify-center mx-auto">
-                <Clock className="w-5 h-5" />
+      {/* Trust & Features Counter Bar - High-End Premium Luxury Design */}
+      <section className="py-16 bg-gradient-to-br from-[#0f1c24] via-[#152835] to-[#1e3d4f] text-white my-16 relative overflow-hidden shadow-2xl border-y border-[#256F96]/30">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(246,151,107,0.12),transparent_50%)]" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Card 1: 24/7 */}
+            <div className="group p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-[#256F96] hover:bg-white/10 transition-all duration-300 shadow-lg flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-2xl bg-[#256F96]/20 border border-[#256F96]/40 text-[#256F96] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Clock className="w-6 h-6 text-[#256F96]" />
+                </div>
+                <span className="text-[10px] font-bold text-slate-400 bg-white/5 px-2.5 py-1 rounded-full border border-white/5">
+                  خدمة مستمرة
+                </span>
               </div>
-              <div className="font-black text-2xl text-[#0f1c24]">24/7</div>
-              <div className="text-xs font-bold text-slate-600">استقبال وتوصيل متواصل</div>
+              <div>
+                <div className="font-black text-3xl sm:text-4xl text-white tracking-tight group-hover:text-[#F6976B] transition-colors">
+                  24/7
+                </div>
+                <p className="text-xs sm:text-sm font-bold text-slate-300 mt-1">
+                  استقبال وتوصيل متواصل
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-              <div className="w-10 h-10 rounded-xl bg-[#F6976B]/15 text-[#e57f50] flex items-center justify-center mx-auto">
-                <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+            {/* Card 2: Rating */}
+            <div className="group p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-[#F6976B] hover:bg-white/10 transition-all duration-300 shadow-lg flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-2xl bg-[#F6976B]/20 border border-[#F6976B]/40 text-[#F6976B] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Star className="w-6 h-6 fill-amber-400 text-amber-400" />
+                </div>
+                <span className="text-[10px] font-bold text-amber-300 bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20">
+                  ممتاز جداً
+                </span>
               </div>
-              <div className="font-black text-2xl text-[#0f1c24]">4.9 / 5</div>
-              <div className="text-xs font-bold text-slate-600">تقييم أكثر من 1,280 معتمر</div>
+              <div>
+                <div className="font-black text-3xl sm:text-4xl text-white tracking-tight group-hover:text-[#F6976B] transition-colors">
+                  4.9 / 5
+                </div>
+                <p className="text-xs sm:text-sm font-bold text-slate-300 mt-1">
+                  من تقييمات المعتمرين
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-              <div className="w-10 h-10 rounded-xl bg-[#256F96]/10 text-[#256F96] flex items-center justify-center mx-auto">
-                <Car className="w-5 h-5" />
+            {/* Card 3: Modern Fleet */}
+            <div className="group p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-[#256F96] hover:bg-white/10 transition-all duration-300 shadow-lg flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-2xl bg-[#256F96]/20 border border-[#256F96]/40 text-[#256F96] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Car className="w-6 h-6 text-[#256F96]" />
+                </div>
+                <span className="text-[10px] font-bold text-emerald-300 bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20">
+                  موديلات 2026
+                </span>
               </div>
-              <div className="font-black text-2xl text-[#0f1c24]">100%</div>
-              <div className="text-xs font-bold text-slate-600">سيارات حديثة (2024 - 2026)</div>
+              <div>
+                <div className="font-black text-3xl sm:text-4xl text-white tracking-tight group-hover:text-[#F6976B] transition-colors">
+                  100%
+                </div>
+                <p className="text-xs sm:text-sm font-bold text-slate-300 mt-1">
+                  سيارات حديثة (2024 - 2026)
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-              <div className="w-10 h-10 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center mx-auto">
-                <ShieldCheck className="w-5 h-5 text-[#25D366]" />
+            {/* Card 4: Certified License */}
+            <div className="group p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-emerald-500 hover:bg-white/10 transition-all duration-300 shadow-lg flex flex-col justify-between space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-12 h-12 rounded-2xl bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-6 h-6 text-[#25D366]" />
+                </div>
+                <span className="text-[10px] font-bold text-[#25D366] bg-[#25D366]/10 px-2.5 py-1 rounded-full border border-[#25D366]/20">
+                  مستند معتمد
+                </span>
               </div>
-              <div className="font-black text-2xl text-[#0f1c24]">ترخيص رسمي</div>
-              <div className="text-xs font-bold text-slate-600">سائقين خبرا ومحترفين</div>
+              <div>
+                <div className="font-black text-2xl sm:text-3xl text-white tracking-tight group-hover:text-[#25D366] transition-colors">
+                  ترخيص رسمي
+                </div>
+                <p className="text-xs sm:text-sm font-bold text-slate-300 mt-1">
+                  سائقين خبرا ومحترفين
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Routes Section (المسارات) */}
+      {/* 3. Routes Section */}
       <RoutesSection />
 
-      {/* 4. Vehicles Section (السيارات) */}
+      {/* 4. Vehicles Section */}
       <VehiclesSection />
 
-      {/* Detailed Service Explanation Banner (اشرح الخدمة بشكل مناسب) */}
+      {/* Detailed Service Explanation Banner */}
       <section className="py-20 bg-gradient-to-br from-[#0f1c24] via-[#1a3545] to-[#256F96] text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
@@ -103,10 +153,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Reviews Section (التقييمات) */}
+      {/* 5. Reviews Section */}
       <ReviewsSection />
 
-      {/* 6. Blog / Articles Section (المقالات) */}
+      {/* 6. Blog / Articles Section */}
       <BlogSection />
     </div>
   );
