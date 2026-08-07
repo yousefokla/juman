@@ -12,18 +12,16 @@ export function VehicleFilter() {
 
   const filterOptions = [
     { id: "all", label: "كافة الأسطول", tag: "جميع الأحجام" },
-    { id: "1-4", label: "1 - 4 ركاب", tag: "سيدان فاخرة (كامري، تورس)" },
-    { id: "5-7", label: "5 - 7 ركاب", tag: "عائلي VIP (جمس، ستاريا)" },
-    { id: "8-14", label: "8 - 14 راكب", tag: "فان للمجموعات (هايس)" },
-    { id: "15+", label: "15+ راكب", tag: "باص سياحي (كوستر)" },
+    { id: "1-4", label: "1 - 4 ركاب", tag: "سيدان فاخرة (كامري، تورس، لكزس)" },
+    { id: "5-7", label: "5 - 7 ركاب", tag: "عائلي وفان (ستاريا، جمس، هايس)" },
+    { id: "9-14", label: "9 - 14 راكب", tag: "فان للمجموعات (هايس)" },
   ];
 
   const filteredVehicles = VEHICLES.filter((vehicle) => {
     if (selectedFilter === "all") return true;
     if (selectedFilter === "1-4") return vehicle.passengersMax <= 4;
-    if (selectedFilter === "5-7") return vehicle.passengersMin >= 5 && vehicle.passengersMax <= 7;
-    if (selectedFilter === "8-14") return vehicle.passengersMin >= 8 && vehicle.passengersMax <= 14;
-    if (selectedFilter === "15+") return vehicle.passengersMin >= 15;
+    if (selectedFilter === "5-7") return vehicle.id === "staria" || vehicle.id === "gmc" || vehicle.id === "hiace";
+    if (selectedFilter === "9-14") return vehicle.id === "hiace" || (vehicle.passengersMin >= 9 && vehicle.passengersMax <= 14);
     return true;
   });
 
@@ -47,7 +45,7 @@ export function VehicleFilter() {
         </div>
 
         {/* Filter Buttons Tabs (Scrollable horizontal row on mobile) */}
-        <div className="flex lg:grid lg:grid-cols-5 gap-3 pt-6 overflow-x-auto pb-3 pt-4 scrollbar-none snap-x snap-mandatory touch-pan-x -mx-2 px-2">
+        <div className="flex lg:grid lg:grid-cols-4 gap-3 pt-6 overflow-x-auto pb-3 pt-4 scrollbar-none snap-x snap-mandatory touch-pan-x -mx-2 px-2">
           {filterOptions.map((option) => (
             <button
               key={option.id}

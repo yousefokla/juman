@@ -1,20 +1,52 @@
 import React from "react";
-import Metadata from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { BLOG_POSTS } from "@/data/blog";
+import { getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
 import { BookOpen, Calendar, Clock, ChevronLeft } from "lucide-react";
 
-export const metadata = {
+const pageUrl = `${SITE_URL}/blog`;
+
+export const metadata: Metadata = {
   title: "مدونة النقل والعمرة | نصائح وإرشادات مطار جدة ومكة",
   description: "اقرأ أحدث المقالات والنصائح والإرشادات حول التوصيل من مطار جدة إلى مكة المكرمة والمدينة المنورة واختيار أفضل السيارات لضيوف الرحمن.",
+  alternates: {
+    canonical: pageUrl,
+    languages: {
+      "ar-SA": pageUrl,
+      "x-default": pageUrl
+    }
+  },
+  openGraph: {
+    title: "مدونة رواحل جمان للنقل البري ودليل المعتمر",
+    description: "أحدث المقالات والنصائح للتوصيل الخاص بين مطار جدة ومكة والمدينة.",
+    url: pageUrl,
+  }
 };
 
 export default function BlogListPage() {
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "المقالات والدليل", item: "/blog" }
+  ]);
+
   return (
     <div className="py-16 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold">المقالات والدليل</span>
+        </nav>
+
+        {/* Page Header */}
+        <header className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#256F96]/10 text-[#256F96] text-xs font-bold">
             <BookOpen className="w-4 h-4 text-[#F6976B]" />
             مدونة النقل لضيوف الرحمن
@@ -25,7 +57,7 @@ export default function BlogListPage() {
           <p className="text-base text-slate-600 leading-relaxed">
             مجموعة من المقالات التفصيلية لمساعدتك في التخطيط لرحلتك، واختيار أسلوب النقل الأفضل، وتجنب مشاكل الانتظار بمطار جدة.
           </p>
-        </div>
+        </header>
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -39,6 +71,8 @@ export default function BlogListPage() {
                   <img
                     src={post.imageUrl}
                     alt={post.title}
+                    width={600}
+                    height={400}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-4 right-4 bg-[#256F96] text-white font-bold text-xs px-3 py-1 rounded-full">

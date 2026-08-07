@@ -1,30 +1,64 @@
 import React from "react";
-import Metadata from "next";
+import { Metadata } from "next";
+import Link from "next/link";
 import { COMPANY_INFO } from "@/data/company";
-import { Phone, MessageCircle, MapPin, Clock, Mail, ShieldCheck } from "lucide-react";
+import { getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
+import { Phone, MessageCircle, MapPin, Clock, ShieldCheck } from "lucide-react";
 
-export const metadata = {
+const pageUrl = `${SITE_URL}/contact`;
+
+export const metadata: Metadata = {
   title: "اتصل بنا للحجز والإنقاذ | شركة رواحل جمان للنقل البري",
   description: "تواصل معنا مباشرة عبر الهاتف +966566343900 أو عبر الواتساب لحجز توصيل مطار جدة إلى مكة المكرمة والمدينة المنورة 24 ساعة.",
+  alternates: {
+    canonical: pageUrl,
+    languages: {
+      "ar-SA": pageUrl,
+      "x-default": pageUrl
+    }
+  },
+  openGraph: {
+    title: "تواصل مع شركة رواحل جمان للنقل البري",
+    description: "حجز مباشر وتواصل سريع على مدار 24 ساعة.",
+    url: pageUrl,
+  }
 };
 
 export default function ContactPage() {
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "اتصل بنا", item: "/contact" }
+  ]);
+
   return (
     <div className="py-16 bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold">اتصل بنا</span>
+        </nav>
+
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <header className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#256F96]/10 text-[#256F96] text-xs font-bold">
             <Phone className="w-4 h-4 text-[#F6976B]" />
             تواصل مباشر وحجز سريع
           </span>
+          {/* EXACTLY ONE H1 */}
           <h1 className="text-3xl sm:text-5xl font-black text-[#0f1c24] tracking-tight">
             تواصل مع فريق شركة رواحل جمان
           </h1>
           <p className="text-base text-slate-600 leading-relaxed">
             فريق خدمة العملاء متواجد على مدار 24 ساعة طوال أيام الأسبوع لاستقبال حجوزاتكم واستفساراتكم الفورية.
           </p>
-        </div>
+        </header>
 
         {/* Contact Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -1,38 +1,71 @@
 import React from "react";
-import Metadata from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { COMPANY_INFO } from "@/data/company";
-import { ShieldCheck, Award, Clock, Users, Car, CheckCircle2, Phone, MessageCircle } from "lucide-react";
+import { getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
+import { ShieldCheck, Award, Clock, Users, Phone, MessageCircle } from "lucide-react";
 
-export const metadata = {
+const pageUrl = `${SITE_URL}/about`;
+
+export const metadata: Metadata = {
   title: "من نحن | شركة رواحل جمان للنقل البري",
   description: "تعرف على شركة رواحل جمان للنقل البري المتخصصة في تقديم خدمات التوصيل الفاخر والمباشر من مطار جدة إلى مكة المكرمة والمدينة المنورة بأعلى معايير الأمان والراحة.",
+  alternates: {
+    canonical: pageUrl,
+    languages: {
+      "ar-SA": pageUrl,
+      "x-default": pageUrl
+    }
+  },
+  openGraph: {
+    title: "عن شركة رواحل جمان للنقل البري",
+    description: "شريككم الموثوق لرحلة إيمانية مريحة وآمنة من مطار جدة إلى مكة والمدينة.",
+    url: pageUrl,
+  }
 };
 
 export default function AboutPage() {
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "من نحن", item: "/about" }
+  ]);
+
   return (
     <div className="py-16 bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold">من نحن</span>
+        </nav>
+
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <header className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#256F96]/10 text-[#256F96] text-xs font-bold">
             <Award className="w-4 h-4 text-[#F6976B]" />
             عن الشركة
           </span>
+          {/* EXACTLY ONE H1 */}
           <h1 className="text-3xl sm:text-5xl font-black text-[#0f1c24] tracking-tight">
             شركة رواحل جمان للنقل البري
           </h1>
           <p className="text-base text-slate-600 leading-relaxed">
             شريككم الموثوق لرحلة إيمانية مريحة وآمنة من مطار جدة إلى جوار البيت العتيق بمكة والمسجد النبوي الشريف بالمدينة المنورة.
           </p>
-        </div>
+        </header>
 
         {/* Company Overview Box */}
         <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md space-y-8">
           <div className="space-y-4">
             <h2 className="text-2xl font-black text-[#0f1c24]">رؤيتنا ورسالتنا</h2>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-              تأسست شركة <strong className="text-[#256F96]">رواحل جمان للنقل البري</strong> لتوفير تجربة نقل استثنائية ترتقي لتطلعات ضيوف الرحمن والزوار في المملكة العربية السعودية. نهدف إلى تقديم خدمة استقبال وتوصيل خاص تتسم بالانضباط العالي في المواعيد، الفخامة، والنظافة المطلقة بأسطول من أحدث السيارات المجهزة (كامري، ستاريا، هايس، جمس، فورد تورس، وكوستر).
+              تأسست شركة <strong className="text-[#256F96]">رواحل جمان للنقل البري</strong> لتوفير تجربة نقل استثنائية ترتقي لتطلعات ضيوف الرحمن والزوار في المملكة العربية السعودية. نهدف إلى تقديم خدمة استقبال وتوصيل خاص تتسم بالانضباط العالي في المواعيد، الفخامة، والنظافة المطلقة بأسطول من أحدث السيارات المجهزة (كامري، ستاريا، هايس، جمس، فورد تورس، ولكزس).
             </p>
           </div>
 
@@ -44,7 +77,7 @@ export default function AboutPage() {
               </div>
               <h3 className="font-bold text-[#0f1c24] text-base">دقة المواعيد 24/7</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                نتابع جدول الرحلات الجوية لحظة بلحظة لضمان وجود السائق في انتظارك فور وصولك دون أي تأخير.
+                نتابع جدول الرحلات الجوية لحظة بلحظة لضمان وجود السائق وتنسيق نقطة الالتقاء فور وصولك دون أي تأخير.
               </p>
             </div>
 
@@ -68,6 +101,24 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
+
+          {/* Official Licensing Block */}
+          <div className="pt-6 border-t border-slate-100 space-y-4">
+            <h3 className="text-lg font-black text-[#0f1c24] flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-[#F6976B]" />
+              <span>التراخيص والاعتمادات الرسمية</span>
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-medium">
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+                <span className="text-slate-600">رقم الترخيص الرسمي:</span>
+                <span className="font-bold text-[#0f1c24] text-base" dir="ltr">35/00004062</span>
+              </div>
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+                <span className="text-slate-600">رقم السجل التجاري:</span>
+                <span className="font-bold text-[#0f1c24] text-base" dir="ltr">7039199356</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Call to Action Box */}
@@ -81,14 +132,14 @@ export default function AboutPage() {
               href={COMPANY_INFO.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md"
+              className="flex items-center gap-2 bg-[#25D366] text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#20bd5a] transition-colors"
             >
               <MessageCircle className="w-4 h-4 fill-current" />
               <span>واتساب للحجوزات</span>
             </a>
             <a
               href={`tel:${COMPANY_INFO.phone}`}
-              className="flex items-center gap-2 bg-[#256F96] text-white px-6 py-3.5 rounded-xl font-bold text-sm"
+              className="flex items-center gap-2 bg-[#256F96] text-white px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-[#1d5777] transition-colors"
             >
               <Phone className="w-4 h-4 text-[#F6976B]" />
               <span>اتصال: {COMPANY_INFO.displayPhone}</span>

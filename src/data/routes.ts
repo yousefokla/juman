@@ -33,11 +33,11 @@ export const ROUTES: Route[] = [
       "سيارات حديثة ومكيفة تتنوع بين الكامري والجمس والستاريا والهايس",
       "متاحة طوال 24 ساعة يومياً وفي مواسم الذروة والرمضان والحج"
     ],
-    recommendedVehicles: ["camry", "gmc", "staria", "hiace", "taurus", "coaster"],
+    recommendedVehicles: ["camry", "gmc", "staria", "hiace", "taurus", "lexus"],
     faqs: [
       {
         question: "كيف يتم استقبالي في مطار جدة؟",
-        answer: "يتواصل معك السائق عبر الواتساب فور هبوط الطائرة ويكون في انتظارك في صالة الوصول ومعه لوحة توضيحية باسمك للتوجيه المباشر إلى السيارة."
+        answer: "يتواصل معك السائق عبر الواتساب فور هبوط الطائرة لتنسيق نقطة الالتقاء السريعة والتوجيه المباشر إلى السيارة مع المساعدة في أمتعتك."
       },
       {
         question: "كم تستغرق الرحلة من مطار جدة إلى فندق مكة؟",
@@ -104,7 +104,7 @@ export const ROUTES: Route[] = [
       "تكييف قوي وشبكة واي فاي وضيافة مياه باردة",
       "امكانية التوقف في محطات الاستراحة حسب رغبة العميل"
     ],
-    recommendedVehicles: ["gmc", "staria", "hiace", "camry", "taurus", "coaster"],
+    recommendedVehicles: ["gmc", "staria", "hiace", "camry", "taurus", "lexus"],
     faqs: [
       {
         question: "هل تتوقف السيارة في الاستراحات أثناء الطريق؟",
@@ -194,7 +194,7 @@ export const ROUTES: Route[] = [
       "سيارات مكيفة ومريحة للتوقف والتقاط الصور التذكارية",
       "تناسب العوائل والمجموعات من كافة الأعمار"
     ],
-    recommendedVehicles: ["staria", "hiace", "gmc", "coaster"],
+    recommendedVehicles: ["staria", "hiace", "gmc", "lexus"],
     faqs: [
       {
         question: "هل تشمل الجولة زيارة غار حراء وغار ثور ومسجد قباء؟",

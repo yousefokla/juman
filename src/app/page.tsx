@@ -5,6 +5,7 @@ import { RoutesSection } from "@/components/RoutesSection";
 import { VehiclesSection } from "@/components/VehiclesSection";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { BlogSection } from "@/components/BlogSection";
+import { FaqSection } from "@/components/FaqSection";
 import { COMPANY_INFO } from "@/data/company";
 import { WhatsappIcon } from "@/components/WhatsappIcon";
 import { ShieldCheck, Phone, Clock, Star, Car, Award } from "lucide-react";
@@ -158,6 +159,9 @@ export default function HomePage() {
 
       {/* 6. Blog / Articles Section */}
       <BlogSection />
+
+      {/* 7. FAQs Section */}
+      <FaqSection />
     </div>
   );
 }

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { ROUTES } from "@/data/routes";
 import { VEHICLES } from "@/data/vehicles";
 import { COMPANY_INFO } from "@/data/company";
+import { getServiceSchema, getFaqSchema, getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
 import { WhatsappIcon } from "@/components/WhatsappIcon";
-import { MapPin, Phone, ArrowRight, HelpCircle } from "lucide-react";
+import { MapPin, Phone, ArrowRight, HelpCircle, Car, ShieldCheck } from "lucide-react";
 
 export async function generateStaticParams() {
   return ROUTES.map((route) => ({
@@ -18,13 +19,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const route = ROUTES.find((r) => r.slug === resolvedParams.slug);
   if (!route) return {};
 
+  const pageUrl = `${SITE_URL}/routes/${route.slug}`;
+
   return {
     title: `توصيل ${route.title} | رواحل جمان للنقل البري`,
     description: route.detailedDescription,
     keywords: route.seoKeywords,
     alternates: {
-      canonical: `https://rawahel-juman.com/routes/${route.slug}`,
+      canonical: pageUrl,
+      languages: {
+        "ar-SA": pageUrl,
+        "x-default": pageUrl
+      }
     },
+    openGraph: {
+      title: `توصيل ${route.title}`,
+      description: route.summary,
+      url: pageUrl,
+      type: "website",
+      images: [{ url: `${SITE_URL}/makkah_clock_tower.jpg`, width: 1200, height: 630, alt: route.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `توصيل ${route.title}`,
+      description: route.summary,
+    }
   };
 }
 
@@ -36,26 +55,54 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
     notFound();
   }
 
+  const pageUrl = `${SITE_URL}/routes/${route.slug}`;
   const recommendedVehiclesList = VEHICLES.filter((v) =>
     route.recommendedVehicles.includes(v.id)
   );
 
+  const serviceSchema = getServiceSchema({
+    name: `خدمة توصيل ${route.title}`,
+    description: route.summary,
+    url: pageUrl
+  });
+
+  const faqSchema = route.faqs && route.faqs.length > 0 ? getFaqSchema(route.faqs) : null;
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "دليل المسارات", item: "/routes" },
+    { name: route.title, item: `/routes/${route.slug}` }
+  ]);
+
   return (
-    <div className="py-14 bg-[#F4F4F5] min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Back Link */}
-        <div>
-          <Link
-            href="/routes"
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#256F96] hover:text-[#1d5777] bg-white px-4 py-2 rounded-xl border border-zinc-200 shadow-sm transition-colors"
-          >
-            <ArrowRight className="w-4 h-4" />
-            <span>العودة لدليل جميع المسارات</span>
-          </Link>
-        </div>
+    <div className="py-12 bg-[#F4F4F5] min-h-screen">
+      {/* JSON-LD Schemas */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <Link href="/routes" className="hover:text-[#256F96] transition-colors">دليل المسارات</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold truncate max-w-xs">{route.title}</span>
+        </nav>
 
         {/* Header Hero Banner */}
-        <div className="bg-gradient-to-br from-[#0f1c24] via-[#1a3545] to-[#256F96] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-6 relative overflow-hidden">
+        <header className="bg-gradient-to-br from-[#0f1c24] via-[#1a3545] to-[#256F96] text-white rounded-3xl p-8 sm:p-12 shadow-xl space-y-6 relative overflow-hidden">
           <div className="flex flex-wrap items-center gap-3">
             <span className="bg-[#F6976B] text-zinc-950 font-black text-xs px-3.5 py-1 rounded-full">
               مسار معتمد 24/7
@@ -65,6 +112,7 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
             </span>
           </div>
 
+          {/* EXACTLY ONE H1 */}
           <h1 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
             توصيل {route.title}
           </h1>
@@ -116,14 +164,14 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
               <span>اتصال للحجز: {COMPANY_INFO.displayPhone}</span>
             </a>
           </div>
-        </div>
+        </header>
 
         {/* Detailed Route Description */}
-        <div className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-6">
+        <section className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-6">
           <h2 className="text-2xl font-extrabold text-[#18181B]">
             تفاصيل ومميزات رحلة {route.title}
           </h2>
-          <p className="text-sm text-zinc-700 leading-relaxed whitespace-pre-line">
+          <p className="text-sm sm:text-base text-zinc-700 leading-relaxed whitespace-pre-line">
             {route.detailedDescription}
           </p>
 
@@ -131,7 +179,7 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
             <h3 className="text-base font-bold text-[#18181B]">
               أبرز ما تتميز به خدمة التوصيل في هذا المسار:
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-zinc-700 font-medium">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-zinc-700 font-medium">
               {route.highlights.map((highlight, idx) => (
                 <div key={idx} className="flex items-center gap-2 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#256F96] shrink-0" />
@@ -140,15 +188,17 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Recommended Vehicles */}
-        <div className="space-y-6">
+        <section className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-extrabold text-[#18181B]">
               السيارات الموصى بها لهذا المسار
             </h2>
-            <span className="text-xs font-bold text-[#256F96]">حجز وتوصيل مباشر</span>
+            <Link href="/vehicles" className="text-xs font-bold text-[#256F96] hover:underline">
+              مشاهدة كافة السيارات ←
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -160,10 +210,16 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
                 <div className="space-y-2">
                   <img
                     src={vehicle.imageUrl}
-                    alt={vehicle.name}
+                    alt={`سيارة ${vehicle.name} لمسار ${route.title}`}
+                    width={400}
+                    height={250}
                     className="w-full h-40 object-cover rounded-xl"
                   />
-                  <h3 className="font-bold text-[#18181B] text-base">{vehicle.name}</h3>
+                  <h3 className="font-bold text-[#18181B] text-base">
+                    <Link href={`/vehicles/${vehicle.slug}`} className="hover:text-[#256F96] transition-colors">
+                      {vehicle.name}
+                    </Link>
+                  </h3>
                   <p className="text-xs text-zinc-500">{vehicle.passengersTag} • {vehicle.luggageCapacity} حقائب</p>
                 </div>
 
@@ -179,11 +235,11 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Route FAQs Section */}
         {route.faqs && route.faqs.length > 0 && (
-          <div className="bg-white rounded-3xl p-8 border border-zinc-200 space-y-6">
+          <section className="bg-white rounded-3xl p-8 border border-zinc-200 space-y-6">
             <div className="flex items-center gap-2 text-[#256F96] font-bold text-sm">
               <HelpCircle className="w-5 h-5 text-[#F6976B]" />
               <span>الأسئلة الشائعة حول هذا المسار</span>
@@ -195,12 +251,12 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
             <div className="space-y-4">
               {route.faqs.map((faq, index) => (
                 <div key={index} className="p-4 bg-zinc-50 rounded-2xl border border-zinc-200 space-y-2">
-                  <h3 className="font-bold text-sm text-[#18181B]">{faq.question}</h3>
-                  <p className="text-xs text-zinc-600 leading-relaxed">{faq.answer}</p>
+                  <h3 className="font-bold text-sm sm:text-base text-[#18181B]">{faq.question}</h3>
+                  <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         )}
       </div>
     </div>

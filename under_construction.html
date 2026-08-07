@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جاري تطوير الموقع | شركة رواحل جمان للنقل البري</title>
+  
+  <!-- الخط الرسمي - Alexandria -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ----------------------------------------------------
+       الهوية البصرية والألوان لشركة رواحل جمان
+       Primary: #256F96 (أزرق ناوي)
+       Accent: #F6976B (أورنج دافئ)
+       Dark: #0f1c24 (كحلي فاخر)
+    ---------------------------------------------------- */
+    * {
+      box-sizing: border-[#256F96];
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Alexandria', sans-serif;
+      background: linear-gradient(135deg, #0f1c24 0%, #152835 50%, #1e3d4f 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* تأثيرات خلفية ضوئية ناعمة */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(246, 151, 107, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(37, 111, 150, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* الكرت الزجاجي المضيء */
+    .construction-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      max-width: 580px;
+      width: 100%;
+      padding: 48px 36px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* شعار أو أيقونة البناء */
+    .icon-wrapper {
+      width: 84px;
+      height: 84px;
+      background: rgba(246, 151, 107, 0.15);
+      border: 1px solid rgba(246, 151, 107, 0.4);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    .icon-wrapper svg {
+      width: 42px;
+      height: 42px;
+      fill: none;
+      stroke: #F6976B;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(246, 151, 107, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px 8px rgba(246, 151, 107, 0.1); }
+    }
+
+    /* الشارة */
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(37, 111, 150, 0.25);
+      border: 1px solid rgba(37, 111, 150, 0.5);
+      color: #7dd3fc;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    /* العنوان والوصف */
+    h1 {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    h1 span {
+      color: #F6976B;
+    }
+
+    p {
+      font-size: 15px;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    /* أزرار الاتصال والمحادثة المباشرة */
+    .buttons-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    @media (min-width: 480px) {
+      .buttons-group {
+        flex-direction: row;
+      }
+    }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #ffffff;
+      box-shadow: 0 10px 20px -5px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-whatsapp:hover {
+      background: #20bd5a;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -5px rgba(37, 211, 102, 0.5);
+    }
+
+    .btn-phone {
+      background: #256F96;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-phone:hover {
+      background: #1d5777;
+      transform: translateY(-2px);
+    }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* حقوق النشر والترويسة */
+    .footer-note {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="construction-card">
+    <!-- الأيقونة -->
+    <div class="icon-wrapper">
+      <svg viewBox="0 0 24 24">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+      </svg>
+    </div>
+
+    <!-- الشارة -->
+    <div class="badge">قريباً بحلّة جديدة 🚀</div>
+
+    <!-- العنوان الرئيسي -->
+    <h1>جاري تطوير وتحديث موقع<br><span>رواحل جمان للنقل البري</span></h1>
+
+    <!-- الوصف -->
+    <p>
+      نعمل حالياً على تطوير وتحديث الموقع لتقديم أفضل تجربة حجز مريحة وسريعة لخدمات التوصيل الخاص من مطار جدة إلى مكة المكرمة والمدينة المنورة.
+    </p>
+
+    <!-- الأزرار للتواصل المباشر للحجز -->
+    <div class="buttons-group">
+      <a href="https://wa.me/966566343900?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D9%80%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AD%D8%AC%D8%B2%20%D8%AA%D9%88%D8%B5%D9%8A%D9%84%20%D8%AE%D8%A7%D8%B5" target="_blank" class="btn btn-whatsapp">
+        <svg viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.461c-1.926 0-3.715-.515-5.263-1.413l-.378-.222-3.911 1.026 1.044-3.812-.243-.387a9.833 9.833 0 01-1.508-5.328c0-5.433 4.42-9.853 9.859-9.853 2.632 0 5.105 1.026 6.965 2.887A9.78 9.78 0 0121.85 12c0 5.433-4.42 9.854-9.799 9.854M12 0C5.373 0 0 5.373 0 12c0 2.118.552 4.107 1.517 5.838L0 24l6.326-1.658C7.994 23.35 9.946 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+        </svg>
+        <span>حجز مباشر عبر الواتساب</span>
+      </a>
+
+      <a href="tel:+966566343900" class="btn btn-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span>اتصال: 0566343900</span>
+      </a>
+    </div>
+
+    <!-- ملاحظة الحقوق والحجوزات -->
+    <div class="footer-note">
+      للحجوزات والاستفسارات المباشرة يمكنك التواصل معنا 24/7 عبر الهاتف أو الواتساب.
+      <br>
+      © 2026 جميع الحقوق محفوظة لشركة رواحل جمان للنقل البري.
+    </div>
+  </div>
+
+</body>
+</html>

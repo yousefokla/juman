@@ -14,8 +14,10 @@ const alexandria = Alexandria({
   display: "swap",
 });
 
+const DOMAIN = "https://www.rawaheljuman.com";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rawahel-juman.com"),
+  metadataBase: new URL(DOMAIN),
   title: {
     default: "شركة رواحل جمان للنقل البري | توصيل مطار جدة إلى مكة المكرمة والمدينة 24/7",
     template: "%s | رواحل جمان للنقل البري"
@@ -28,11 +30,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/logo.png" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico" },
     ],
     shortcut: ["/logo.png"],
     apple: [
-      { url: "/apple-icon.png" },
+      { url: "/logo.png" },
     ],
   },
   formatDetection: {
@@ -43,19 +45,19 @@ export const metadata: Metadata = {
   openGraph: {
     title: "شركة رواحل جمان للنقل البري | حجز توصيل مطار جدة مكة",
     description: COMPANY_INFO.seoDescription,
-    url: "https://rawahel-juman.com",
+    url: DOMAIN,
     siteName: COMPANY_INFO.name,
     locale: "ar_SA",
     type: "website",
     images: [
       {
-        url: "/logo.png",
+        url: `${DOMAIN}/logo.png`,
         width: 512,
         height: 512,
         alt: "شعار شركة رواحل جمان للنقل البري",
       },
       {
-        url: "/makkah_clock_tower.jpg",
+        url: `${DOMAIN}/makkah_clock_tower.jpg`,
         width: 1200,
         height: 630,
         alt: "رواحل جمان للنقل البري - توصيل مطار جدة إلى مكة المكرمة",
@@ -66,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "شركة رواحل جمان للنقل البري | حجز توصيل مطار جدة مكة",
     description: COMPANY_INFO.seoDescription,
-    images: ["/logo.png"],
+    images: [`${DOMAIN}/logo.png`],
   },
   robots: {
     index: true,
@@ -80,7 +82,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://rawahel-juman.com",
+    canonical: DOMAIN,
+    languages: {
+      "ar-SA": DOMAIN,
+      "x-default": DOMAIN
+    }
   },
 };
 

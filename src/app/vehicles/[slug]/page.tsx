@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { VEHICLES } from "@/data/vehicles";
 import { COMPANY_INFO } from "@/data/company";
+import { getServiceSchema, getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
 import { WhatsappIcon } from "@/components/WhatsappIcon";
-import { Users, Briefcase, Phone, ArrowRight, ShieldCheck } from "lucide-react";
+import { Users, Briefcase, Phone, ArrowRight, ShieldCheck, MapPin, CheckCircle2 } from "lucide-react";
 
 export async function generateStaticParams() {
   return VEHICLES.map((vehicle) => ({
@@ -17,12 +18,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const vehicle = VEHICLES.find((v) => v.slug === resolvedParams.slug);
   if (!vehicle) return {};
 
+  const pageUrl = `${SITE_URL}/vehicles/${vehicle.slug}`;
+
   return {
     title: `سيارة ${vehicle.name} لتوصيل مطار جدة ومكة | رواحل جمان`,
     description: vehicle.detailedDescription,
     alternates: {
-      canonical: `https://rawahel-juman.com/vehicles/${vehicle.slug}`,
+      canonical: pageUrl,
+      languages: {
+        "ar-SA": pageUrl,
+        "x-default": pageUrl
+      }
     },
+    openGraph: {
+      title: `سيارة ${vehicle.name} لتوصيل مطار جدة ومكة`,
+      description: vehicle.description,
+      url: pageUrl,
+      type: "website",
+      images: [{ url: `${SITE_URL}${vehicle.imageUrl}`, width: 1200, height: 630, alt: vehicle.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `سيارة ${vehicle.name} لتوصيل مطار جدة ومكة`,
+      description: vehicle.description,
+      images: [`${SITE_URL}${vehicle.imageUrl}`],
+    }
   };
 }
 
@@ -34,32 +54,55 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  return (
-    <div className="py-14 bg-[#F4F4F5] min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Back Link */}
-        <div>
-          <Link
-            href="/vehicles"
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#256F96] hover:text-[#1d5777] bg-white px-4 py-2 rounded-xl border border-zinc-200 shadow-sm transition-colors"
-          >
-            <ArrowRight className="w-4 h-4" />
-            <span>العودة لجميع السيارات</span>
-          </Link>
-        </div>
+  const pageUrl = `${SITE_URL}/vehicles/${vehicle.slug}`;
+  const serviceSchema = getServiceSchema({
+    name: `خدمة توصيل سيارة ${vehicle.name}`,
+    description: vehicle.detailedDescription,
+    url: pageUrl
+  });
 
-        {/* Hero Section */}
-        <div className="bg-white rounded-3xl overflow-hidden border border-zinc-200 shadow-lg grid grid-cols-1 lg:grid-cols-2">
-          {/* Main Image & Badges */}
-          <div className="relative h-72 sm:h-96 lg:h-full bg-zinc-950">
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "أسطول السيارات", item: "/vehicles" },
+    { name: vehicle.name, item: `/vehicles/${vehicle.slug}` }
+  ]);
+
+  return (
+    <div className="py-12 bg-[#F4F4F5] min-h-screen">
+      {/* JSON-LD Schemas */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <Link href="/vehicles" className="hover:text-[#256F96] transition-colors">أسطول السيارات</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold truncate max-w-xs">{vehicle.name}</span>
+        </nav>
+
+        {/* Hero Showcase Section */}
+        <header className="bg-white rounded-3xl overflow-hidden border border-zinc-200 shadow-lg grid grid-cols-1 lg:grid-cols-2">
+          {/* Main Image Container */}
+          <div className="relative h-72 sm:h-96 lg:h-auto min-h-[320px] bg-gradient-to-br from-zinc-950 via-slate-900 to-zinc-900 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
             <img
               src={vehicle.imageUrl}
-              alt={vehicle.name}
-              className="w-full h-full object-cover"
+              alt={`سيارة ${vehicle.name} لتوصيل مطار جدة ومكة المكرمة`}
+              width={800}
+              height={500}
+              className="w-full h-full object-contain max-h-[380px] lg:max-h-full rounded-2xl drop-shadow-2xl"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none" />
             {vehicle.badge && (
-              <span className="absolute top-4 right-4 bg-[#F6976B] text-zinc-950 font-black text-xs px-3.5 py-1 rounded-full shadow-md">
+              <span className="absolute top-4 right-4 bg-[#F6976B] text-zinc-950 font-black text-xs px-3.5 py-1 rounded-full shadow-md z-10">
                 {vehicle.badge}
               </span>
             )}
@@ -72,6 +115,7 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
                 {vehicle.type}
               </span>
 
+              {/* EXACTLY ONE H1 */}
               <h1 className="text-3xl sm:text-4xl font-extrabold text-[#18181B]">
                 {vehicle.name}
               </h1>
@@ -125,22 +169,22 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
               </a>
             </div>
           </div>
-        </div>
+        </header>
 
         {/* Detailed Description & Features */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-6">
+            <section className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-6">
               <h2 className="text-2xl font-extrabold text-[#18181B]">
                 الوصف الشامل لسيارة {vehicle.name}
               </h2>
-              <p className="text-sm text-zinc-700 leading-relaxed whitespace-pre-line">
+              <p className="text-sm sm:text-base text-zinc-700 leading-relaxed whitespace-pre-line">
                 {vehicle.detailedDescription}
               </p>
 
               <div className="pt-4 border-t border-zinc-100 space-y-3">
                 <h3 className="font-bold text-base text-[#18181B]">مميزات ورفاهية هذه المركبة:</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-zinc-700 font-medium">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-zinc-700 font-medium">
                   {vehicle.features.map((feat, i) => (
                     <div key={i} className="flex items-center gap-2 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#256F96] shrink-0" />
@@ -149,12 +193,12 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
                   ))}
                 </div>
               </div>
-            </div>
+            </section>
 
             {/* Suitability */}
-            <div className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-4">
+            <section className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-4">
               <h3 className="text-lg font-bold text-[#18181B]">لمن تناسب هذه السيارة؟</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-zinc-700">
+              <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-700 font-medium">
                 {vehicle.suitableFor.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#F6976B] shrink-0" />
@@ -162,11 +206,11 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
           </div>
 
-          {/* Guarantee & Contact Sidebar */}
-          <div className="space-y-6">
+          {/* Guarantee & Internal Link Sidebar */}
+          <aside className="space-y-6">
             <div className="bg-[#0f1c24] text-white rounded-3xl p-8 space-y-4 shadow-md">
               <div className="flex items-center gap-2 text-[#F6976B] font-bold text-base">
                 <ShieldCheck className="w-6 h-6" />
@@ -180,14 +224,32 @@ export default async function VehicleDetailPage({ params }: { params: Promise<{ 
                   href={COMPANY_INFO.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-bold text-xs shadow-md"
+                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-bold text-xs shadow-md hover:bg-[#20bd5a] transition-colors"
                 >
                   <WhatsappIcon className="w-4 h-4 fill-current" />
                   <span>تواصل فوري للحجز</span>
                 </a>
               </div>
             </div>
-          </div>
+
+            <div className="bg-white rounded-3xl p-6 border border-zinc-200 space-y-3">
+              <h3 className="font-bold text-sm text-[#18181B]">احجز هذه السيارة لمسارك:</h3>
+              <ul className="space-y-2 text-xs font-semibold text-zinc-700">
+                <li>
+                  <Link href="/routes/jeddah-airport-to-makkah" className="hover:text-[#256F96] transition-colors flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#256F96]" />
+                    <span>توصيل مطار جدة إلى مكة</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/routes/makkah-to-madinah" className="hover:text-[#256F96] transition-colors flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#256F96]" />
+                    <span>توصيل بين مكة والمدينة</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

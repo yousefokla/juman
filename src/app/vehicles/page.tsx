@@ -1,23 +1,55 @@
 import React from "react";
-import Metadata from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { VEHICLES } from "@/data/vehicles";
 import { COMPANY_INFO } from "@/data/company";
 import { VehicleFilter } from "@/components/VehicleFilter";
 import { WhatsappIcon } from "@/components/WhatsappIcon";
+import { getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
 import { Car, Users, Briefcase, ChevronLeft } from "lucide-react";
 
-export const metadata = {
-  title: "أسطول السيارات المتاحة | كامري، ستاريا، جمس، هايس، كوستر",
-  description: "استعرض كافة السيارات المتاحة للتوصيل من مطار جدة إلى مكة المكرمة والمدينة المنورة لدى شركة رواحل جمان للنقل البري. أحدث الموديلات وحجز مباشر عبر الواتساب.",
+const pageUrl = `${SITE_URL}/vehicles`;
+
+export const metadata: Metadata = {
+  title: "أسطول السيارات المتاحة | كامري، تورس، لكزس، جمس، ستاريا، هايس",
+  description: "استعرض كافة السيارات المتاحة للتوصيل من مطار جدة إلى مكة المكرمة والمدينة المنورة لدى شركة رواحل جمان للنقل البري. أحدث الموديلات 2026 وحجز مباشر عبر الواتساب.",
+  alternates: {
+    canonical: pageUrl,
+    languages: {
+      "ar-SA": pageUrl,
+      "x-default": pageUrl
+    }
+  },
+  openGraph: {
+    title: "أسطول السيارات المتاحة للتوصيل الفاخر | رواحل جمان",
+    description: "أحدث سيارات التوصيل الفاخر من مطار جدة إلى مكة والمدينة.",
+    url: pageUrl,
+  }
 };
 
 export default function VehiclesPage() {
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "أسطول السيارات", item: "/vehicles" }
+  ]);
+
   return (
     <div className="py-16 bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold">أسطول السيارات</span>
+        </nav>
+
+        {/* Page Header */}
+        <header className="text-center max-w-3xl mx-auto space-y-4">
           <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F6976B]/15 text-[#e57f50] text-xs font-bold">
             <Car className="w-4 h-4 text-[#256F96]" />
             أسطول رواحل جمان 2026
@@ -28,13 +60,13 @@ export default function VehiclesPage() {
           <p className="text-base text-slate-600 leading-relaxed">
             مجموعة متكاملة من أحدث السيارات المجهزة بالكامل لخدمة الأفراد، العائلات، والوفود القادمة عبر مطار جدة لزيارة مكة المكرمة والمدينة المنورة.
           </p>
-        </div>
+        </header>
 
         {/* Passenger Filter Component embedded */}
         <VehicleFilter />
 
         {/* Full Fleet Detailed Listing */}
-        <div className="space-y-8 pt-8">
+        <section className="space-y-8 pt-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl font-black text-[#0f1c24]">
               تفاصيل كافة السيارات والمواصفات
@@ -46,7 +78,7 @@ export default function VehiclesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {VEHICLES.map((vehicle) => (
-              <div
+              <article
                 key={vehicle.id}
                 className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-[#256F96]/40 transition-all duration-300 flex flex-col justify-between"
               >
@@ -54,7 +86,9 @@ export default function VehiclesPage() {
                   <div className="relative h-56 bg-slate-950">
                     <img
                       src={vehicle.imageUrl}
-                      alt={vehicle.name}
+                      alt={`سيارة ${vehicle.name} لتوصيل مطار جدة ومكة المكرمة`}
+                      width={600}
+                      height={400}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
@@ -72,7 +106,9 @@ export default function VehiclesPage() {
 
                   <div className="p-6 space-y-4">
                     <h3 className="text-xl font-black text-[#0f1c24]">
-                      {vehicle.name}
+                      <Link href={`/vehicles/${vehicle.slug}`} className="hover:text-[#256F96] transition-colors">
+                        {vehicle.name}
+                      </Link>
                     </h3>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       {vehicle.description}
@@ -121,10 +157,10 @@ export default function VehiclesPage() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

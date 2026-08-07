@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Phone, Menu, X, Car, MapPin, Star, BookOpen, Info, ShieldCheck } from "lucide-react";
+import { Phone, Menu, X, Car, MapPin, Star, BookOpen, Info, ShieldCheck, HelpCircle } from "lucide-react";
 import { WhatsappIcon } from "@/components/WhatsappIcon";
 import { COMPANY_INFO } from "@/data/company";
 
@@ -13,6 +13,7 @@ export function Header() {
     { name: "الرئيسية", href: "/" },
     { name: "المسارات", href: "/routes", icon: MapPin },
     { name: "السيارات المتاحة", href: "/vehicles", icon: Car },
+    { name: "الأسئلة الشائعة", href: "/faq", icon: HelpCircle },
     { name: "التقييمات", href: "/reviews", icon: Star },
     { name: "المقالات", href: "/blog", icon: BookOpen },
     { name: "من نحن", href: "/about", icon: Info },

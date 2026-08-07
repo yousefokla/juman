@@ -1,22 +1,54 @@
 import React from "react";
-import Metadata from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { ROUTES } from "@/data/routes";
 import { COMPANY_INFO } from "@/data/company";
+import { getBreadcrumbSchema, SITE_URL } from "@/lib/jsonld";
 import { WhatsappIcon } from "@/components/WhatsappIcon";
 import { MapPin, Navigation, ChevronLeft } from "lucide-react";
 
-export const metadata = {
+const pageUrl = `${SITE_URL}/routes`;
+
+export const metadata: Metadata = {
   title: "جميع مسارات التوصيل | مطار جدة، مكة، والمدينة المنورة",
   description: "استعرض كافة مسارات التوصيل المتاحة لدى شركة رواحل جمان للنقل البري بين مطار جدة (مطار الملك عبدالعزيز الدولي)، مكة المكرمة، والمدينة المنورة.",
+  alternates: {
+    canonical: pageUrl,
+    languages: {
+      "ar-SA": pageUrl,
+      "x-default": pageUrl
+    }
+  },
+  openGraph: {
+    title: "مسارات التوصيل والتنقلات الرئيسية | رواحل جمان",
+    description: "دليل مسارات التوصيل الخاص بين مطار جدة، مكة المكرمة، والمدينة المنورة.",
+    url: pageUrl,
+  }
 };
 
 export default function RoutesListPage() {
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "الرئيسية", item: "/" },
+    { name: "دليل المسارات", item: "/routes" }
+  ]);
+
   return (
     <div className="py-16 bg-[#F4F4F5] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Navigation Breadcrumb */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-zinc-500">
+          <Link href="/" className="hover:text-[#256F96] transition-colors">الرئيسية</Link>
+          <span>/</span>
+          <span className="text-[#256F96] font-bold">دليل المسارات</span>
+        </nav>
+
         {/* Page Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <header className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#256F96]/10 text-[#256F96] text-xs font-bold">
             <Navigation className="w-4 h-4 text-[#F6976B]" />
             دليل المسارات الكامل
@@ -27,12 +59,12 @@ export default function RoutesListPage() {
           <p className="text-base text-zinc-600 leading-relaxed">
             اختر المسار المطلوب للاطلاع على كامل التفاصيل، المسافة، الزمن المتوقع، والسيارات المناسبة لرحلتك.
           </p>
-        </div>
+        </header>
 
         {/* Routes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ROUTES.map((route) => (
-            <div
+            <article
               key={route.id}
               className="rex-card p-6 flex flex-col justify-between"
             >
@@ -92,7 +124,7 @@ export default function RoutesListPage() {
                   <ChevronLeft className="w-4 h-4" />
                 </Link>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

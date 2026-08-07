@@ -24,11 +24,17 @@ export function Footer() {
               مؤسسة رواحل جمان للنقل البري، المتخصصة في التوصيل الخاص والاستقبال المباشر من مطار الملك عبدالعزيز الدولي بجدة إلى مكة المكرمة والمدينة المنورة بأحدث السيارات الفاخرة المجهزة لراحة ضيوف الرحمن.
             </p>
             <div className="pt-2 flex flex-col gap-2 text-xs text-slate-400">
-              <span className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#F6976B]" />
-                ترخيص النقل البري المعتمد بالمملكة العربية السعودية
-              </span>
-              <span className="flex items-center gap-2">
+              <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/60 space-y-1.5">
+                <span className="flex items-center gap-2 text-[#F6976B] font-bold text-xs">
+                  <ShieldCheck className="w-4 h-4 text-[#F6976B] shrink-0" />
+                  <span>مؤسسة مرخّصة رسمياً:</span>
+                </span>
+                <div className="text-[11px] text-slate-300 font-medium space-y-1 pr-6">
+                  <div>رقم الترخيص: <span className="font-bold text-white" dir="ltr">35/00004062</span></div>
+                  <div>السجل التجاري: <span className="font-bold text-white" dir="ltr">7039199356</span></div>
+                </div>
+              </div>
+              <span className="flex items-center gap-2 pt-1">
                 <Clock className="w-4 h-4 text-[#256F96]" />
                 خدمة عملاء وحجوزات متوفرة 24/7 طوال العام
               </span>
@@ -132,6 +138,7 @@ export function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
           <p>© {new Date().getFullYear()} جميع الحقوق محفوظة لشركة {COMPANY_INFO.name}.</p>
           <div className="flex items-center gap-6">
+            <Link href="/faq" className="hover:text-white transition-colors">الأسئلة الشائعة</Link>
             <Link href="/about" className="hover:text-white transition-colors">من نحن</Link>
             <Link href="/contact" className="hover:text-white transition-colors">اتصل بنا</Link>
             <Link href="/routes" className="hover:text-white transition-colors">دليل المسارات</Link>
