@@ -103,6 +103,16 @@ export default function RoutesListPage() {
                     <span>{route.destination}</span>
                   </div>
                 </div>
+
+                {/* Price Display */}
+                {route.startingPrice ? (
+                  <div className="flex items-center justify-between bg-amber-500/10 border border-amber-500/20 px-3.5 py-2.5 rounded-xl">
+                    <span className="text-xs font-bold text-zinc-700">الأسعار تبدأ من:</span>
+                    <span className="text-base font-black text-[#256F96]">
+                      <span className="text-lg text-[#e57f50]">{route.startingPrice}</span> ريال سعودي
+                    </span>
+                  </div>
+                ) : null}
               </div>
 
               <div className="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between gap-3">

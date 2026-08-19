@@ -64,6 +64,16 @@ export function RoutesSection() {
                     <span>{route.destination}</span>
                   </div>
                 </div>
+
+                {/* Price Preview */}
+                {route.startingPrice ? (
+                  <div className="flex items-center justify-between bg-amber-500/10 border border-amber-500/20 px-3.5 py-2 rounded-xl">
+                    <span className="text-xs font-bold text-zinc-700">سعر التوصيل:</span>
+                    <span className="text-sm font-black text-[#256F96]">
+                      يبدأ من <span className="text-base text-[#e57f50]">{route.startingPrice}</span> ريال
+                    </span>
+                  </div>
+                ) : null}
               </div>
 
               {/* Action Link & Official WhatsApp Button */}

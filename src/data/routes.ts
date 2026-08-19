@@ -1,3 +1,9 @@
+export interface VehiclePrice {
+  vehicleId: string;
+  vehicleName: string;
+  price: number;
+}
+
 export interface Route {
   id: string;
   slug: string;
@@ -10,6 +16,8 @@ export interface Route {
   detailedDescription: string;
   highlights: string[];
   recommendedVehicles: string[]; // vehicle IDs
+  prices?: VehiclePrice[];
+  startingPrice?: number;
   faqs: { question: string; answer: string }[];
   seoKeywords: string[];
   isPopular?: boolean;
@@ -24,6 +32,7 @@ export const ROUTES: Route[] = [
     destination: "جميع فنادق وأحياء مكة المكرمة والحرم المكي",
     distance: "حوالي 95 كم",
     estimatedTime: "55 - 70 دقيقة",
+    startingPrice: 175,
     summary: "خدمة التوصيل الأسرع والأكثر راحة من صالة الوصول بمطار جدة مباشرة حتى باب فندقك بمكة المكرمة مع سائق محترف في انتظارك.",
     detailedDescription: "نقدم لضيوف الرحمن أسرع وأرقى خدمة توصيل خاص من مطار الملك عبدالعزيز الدولي بجدة إلى مكة المكرمة على مدار 24 ساعة. يقوم السائق بمتابعة جدول رحلتك الجوية واستقبالك فور خروجك من الصالة مع مساعدة كاملة في حمل الأمتعة والانطلاق عبر طريق الحرمين السريع في سيارات حديثة ومكيفة تضمن لك الراحة والسكينة لبدء مناسك العمرة بسهولة.",
     highlights: [
@@ -33,7 +42,15 @@ export const ROUTES: Route[] = [
       "سيارات حديثة ومكيفة تتنوع بين الكامري والجمس والستاريا والهايس",
       "متاحة طوال 24 ساعة يومياً وفي مواسم الذروة والرمضان والحج"
     ],
-    recommendedVehicles: ["camry", "gmc", "staria", "hiace", "taurus", "lexus"],
+    recommendedVehicles: ["camry", "taurus", "lexus", "staria", "hiace", "gmc"],
+    prices: [
+      { vehicleId: "camry", vehicleName: "كامري", price: 175 },
+      { vehicleId: "taurus", vehicleName: "تورس VIP", price: 200 },
+      { vehicleId: "staria", vehicleName: "ستاريا VIP", price: 200 },
+      { vehicleId: "lexus", vehicleName: "لكزس VIP", price: 250 },
+      { vehicleId: "hiace", vehicleName: "هايس", price: 350 },
+      { vehicleId: "gmc", vehicleName: "جمس يوكن", price: 350 }
+    ],
     faqs: [
       {
         question: "كيف يتم استقبالي في مطار جدة؟",
@@ -65,6 +82,7 @@ export const ROUTES: Route[] = [
     destination: "جميع أحياء وفنادق وكورنيش جدة والبلد التاريخية",
     distance: "حوالي 15 - 35 كم",
     estimatedTime: "20 - 35 دقيقة",
+    startingPrice: 100,
     summary: "خدمة توصيل سريعة وآمنة من مطار جدة إلى كافة الفنادق والوجهات السياحية والتجارية داخل عروس البحر الأحمر.",
     detailedDescription: "سواء كنت قادماً لزيارة عمل أو سياحة أو ترانزيت في مدينة جدة، نوفر لك خدمة التوصيل الخاص السريع من مطار جدة إلى كافة الأحياء السكنية، الفنادق، الكورنيش، والمركز التجاري بأسطول حديث وسائقين على معرفة تامة بكل شوارع ومسارات جدة.",
     highlights: [
@@ -73,7 +91,15 @@ export const ROUTES: Route[] = [
       "أسعار محددة وخدمة راقية بدون أي رسوم خفية",
       "دقة متناهية في المواعيد وسرعة استجابة للحجوزات الفورية"
     ],
-    recommendedVehicles: ["camry", "taurus", "gmc", "staria"],
+    recommendedVehicles: ["camry", "taurus", "lexus", "staria", "hiace", "gmc"],
+    prices: [
+      { vehicleId: "camry", vehicleName: "كامري", price: 100 },
+      { vehicleId: "taurus", vehicleName: "تورس VIP", price: 120 },
+      { vehicleId: "lexus", vehicleName: "لكزس VIP", price: 150 },
+      { vehicleId: "staria", vehicleName: "ستاريا VIP", price: 150 },
+      { vehicleId: "hiace", vehicleName: "هايس", price: 250 },
+      { vehicleId: "gmc", vehicleName: "جمس يوكن", price: 250 }
+    ],
     faqs: [
       {
         question: "هل يمكنني طلب توصيل فور الوصول إلى المطار؟",
@@ -96,6 +122,7 @@ export const ROUTES: Route[] = [
     destination: "الفنادق المحيطة بالحرم النبوي الشريف بالمدينة المنورة",
     distance: "حوالي 420 كم",
     estimatedTime: "3.5 - 4.5 ساعات",
+    startingPrice: 500,
     summary: "رحلة آمنة ومريحة للغاية بين الحرمين الشريفين بسيارات حديثة ومكيفة مصممة للرحلات الطويلة.",
     detailedDescription: "انتقل ببالغ الراحة والطمأنينة من جوار البيت العتيق بمكة المكرمة إلى رحاب المسجد النبوي الشريف بالمدينة المنورة. نوفر لك أفضل السيارات المجهزة بالكامل من مقاعد جلدية وواي فاي وتكييف قوي وسائقين محترفين أصحاب خبرة واسعة بطريق الهجرة السريع لضمان رحلة ممتعة وآمنة لك ولعائلتك.",
     highlights: [
@@ -104,7 +131,15 @@ export const ROUTES: Route[] = [
       "تكييف قوي وشبكة واي فاي وضيافة مياه باردة",
       "امكانية التوقف في محطات الاستراحة حسب رغبة العميل"
     ],
-    recommendedVehicles: ["gmc", "staria", "hiace", "camry", "taurus", "lexus"],
+    recommendedVehicles: ["camry", "taurus", "lexus", "staria", "hiace", "gmc"],
+    prices: [
+      { vehicleId: "camry", vehicleName: "كامري", price: 500 },
+      { vehicleId: "taurus", vehicleName: "تورس VIP", price: 550 },
+      { vehicleId: "lexus", vehicleName: "لكزس VIP", price: 600 },
+      { vehicleId: "staria", vehicleName: "ستاريا VIP", price: 600 },
+      { vehicleId: "hiace", vehicleName: "هايس", price: 750 },
+      { vehicleId: "gmc", vehicleName: "جمس يوكن", price: 1000 }
+    ],
     faqs: [
       {
         question: "هل تتوقف السيارة في الاستراحات أثناء الطريق؟",
@@ -122,11 +157,12 @@ export const ROUTES: Route[] = [
   {
     id: "madinah-airport-to-madinah-city",
     slug: "madinah-airport-to-madinah-city",
-    title: "من مطار المدينة المنورة إلى داخل المدينة المنورة",
+    title: "من مطار المدينة المنورة إلى فنادق المدينة المنورة",
     origin: "مطار الأمير محمد بن عبدالعزيز الدولي بالمدينة المنورة",
     destination: "فنادق المسجد النبوي وكافة أحياء المدينة المنورة",
     distance: "حوالي 18 - 25 كم",
     estimatedTime: "20 - 30 دقيقة",
+    startingPrice: 100,
     summary: "استقبال راقٍ وتوصيل مباشر فور وصولك مطار المدينة إلى فندقك بجوار المسجد النبوي الشريف.",
     detailedDescription: "نرحب بضيوف رسول الله فور وصولهم إلى مطار الأمير محمد بن عبدالعزيز بالمدينة المنورة، حيث يكون السائق في انتظارك لنقلك المباشر والمريح إلى الفندق بالمنطقة المركزية أو كافة أحياء طيبة الطيبة بأسطول حديث وخدمة ضيافة متميزة.",
     highlights: [
@@ -135,7 +171,15 @@ export const ROUTES: Route[] = [
       "سائقون ذوي أخلاق عالية ومعرفة جغرافية دقيقة بالمدينة",
       "توصيل مريح للأفراد والمجموعات والعائلات"
     ],
-    recommendedVehicles: ["camry", "gmc", "staria", "hiace"],
+    recommendedVehicles: ["camry", "taurus", "staria", "lexus", "hiace", "gmc"],
+    prices: [
+      { vehicleId: "camry", vehicleName: "كامري", price: 100 },
+      { vehicleId: "taurus", vehicleName: "تورس VIP", price: 150 },
+      { vehicleId: "staria", vehicleName: "ستاريا VIP", price: 150 },
+      { vehicleId: "lexus", vehicleName: "لكزس VIP", price: 200 },
+      { vehicleId: "hiace", vehicleName: "هايس", price: 250 },
+      { vehicleId: "gmc", vehicleName: "جمس يوكن", price: 250 }
+    ],
     faqs: [
       {
         question: "هل يتم التوصيل إلى فنادق المنطقة المركزية الشمالية والجنوبية؟",

@@ -190,6 +190,66 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
           </div>
         </section>
 
+        {/* Pricing Section if route has prices */}
+        {route.prices && route.prices.length > 0 && (
+          <section className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 text-xs font-bold mb-2">
+                  <span>أسعار رسمية وثابتة بدون رسوم خفية</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-black text-[#18181B]">
+                  أسعار التوصيل لمسار {route.title}
+                </h2>
+              </div>
+              {route.startingPrice && (
+                <div className="bg-[#256F96]/10 text-[#256F96] px-4 py-2 rounded-2xl border border-[#256F96]/20 font-black text-sm">
+                  الأسعار تبدأ من <span className="text-xl text-[#e57f50]">{route.startingPrice}</span> ريال
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+              {route.prices.map((item) => {
+                const vehicleObj = VEHICLES.find((v) => v.id === item.vehicleId);
+                return (
+                  <div
+                    key={item.vehicleId}
+                    className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-[#256F96] hover:shadow-md transition-all flex flex-col justify-between space-y-4 group"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <h3 className="font-extrabold text-[#18181B] text-lg group-hover:text-[#256F96] transition-colors">
+                          {item.vehicleName}
+                        </h3>
+                        {vehicleObj && (
+                          <span className="text-xs text-zinc-500 block mt-0.5">
+                            {vehicleObj.passengersTag} • {vehicleObj.luggageCapacity} حقائب
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-left">
+                        <span className="text-2xl font-black text-[#256F96]">{item.price}</span>
+                        <span className="text-xs font-bold text-zinc-500 mr-1">ريال</span>
+                      </div>
+                    </div>
+
+                    <a
+                      href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=` + encodeURIComponent(`السلام عليكم، أرغب في حجز سيارة (${item.vehicleName}) لمسار (${route.title}) بسعر (${item.price} ريال)`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all"
+                    >
+                      <WhatsappIcon className="w-4 h-4 fill-current" />
+                      <span>حجز فوري بسعر {item.price} ريال</span>
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
         {/* Recommended Vehicles */}
         <section className="space-y-6">
           <div className="flex items-center justify-between">
@@ -202,38 +262,48 @@ export default async function RouteDetailPage({ params }: { params: Promise<{ sl
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recommendedVehiclesList.map((vehicle) => (
-              <div
-                key={vehicle.id}
-                className="rex-card p-5 space-y-3 flex flex-col justify-between"
-              >
-                <div className="space-y-2">
-                  <img
-                    src={vehicle.imageUrl}
-                    alt={`سيارة ${vehicle.name} لمسار ${route.title}`}
-                    width={400}
-                    height={250}
-                    className="w-full h-40 object-cover rounded-xl"
-                  />
-                  <h3 className="font-bold text-[#18181B] text-base">
-                    <Link href={`/vehicles/${vehicle.slug}`} className="hover:text-[#256F96] transition-colors">
-                      {vehicle.name}
-                    </Link>
-                  </h3>
-                  <p className="text-xs text-zinc-500">{vehicle.passengersTag} • {vehicle.luggageCapacity} حقائب</p>
-                </div>
-
-                <a
-                  href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=` + encodeURIComponent(`السلام عليكم، أرغب في حجز سيارة (${vehicle.name}) لمسار (${route.title})`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-2.5 rounded-xl font-bold text-xs shadow-sm hover:bg-[#20bd5a] transition-colors"
+            {recommendedVehiclesList.map((vehicle) => {
+              const priceItem = route.prices?.find((p) => p.vehicleId === vehicle.id);
+              return (
+                <div
+                  key={vehicle.id}
+                  className="rex-card p-5 space-y-3 flex flex-col justify-between"
                 >
-                  <WhatsappIcon className="w-4 h-4 fill-current" />
-                  <span>حجز {vehicle.arabicName} بهذا المسار</span>
-                </a>
-              </div>
-            ))}
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <img
+                        src={vehicle.imageUrl}
+                        alt={`سيارة ${vehicle.name} لمسار ${route.title}`}
+                        width={400}
+                        height={250}
+                        className="w-full h-40 object-cover rounded-xl"
+                      />
+                      {priceItem && (
+                        <span className="absolute bottom-2 left-2 bg-[#0f1c24]/90 text-white font-black text-xs px-3 py-1 rounded-lg backdrop-blur-md border border-white/20">
+                          {priceItem.price} ريال
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-[#18181B] text-base">
+                      <Link href={`/vehicles/${vehicle.slug}`} className="hover:text-[#256F96] transition-colors">
+                        {vehicle.name}
+                      </Link>
+                    </h3>
+                    <p className="text-xs text-zinc-500">{vehicle.passengersTag} • {vehicle.luggageCapacity} حقائب</p>
+                  </div>
+
+                  <a
+                    href={`https://wa.me/${COMPANY_INFO.whatsappNumber}?text=` + encodeURIComponent(`السلام عليكم، أرغب في حجز سيارة (${vehicle.name}) لمسار (${route.title})${priceItem ? ` بسعر ${priceItem.price} ريال` : ""}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-2.5 rounded-xl font-bold text-xs shadow-sm hover:bg-[#20bd5a] transition-colors"
+                  >
+                    <WhatsappIcon className="w-4 h-4 fill-current" />
+                    <span>حجز {vehicle.arabicName} {priceItem ? `(${priceItem.price} ريال)` : ""}</span>
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </section>
 
